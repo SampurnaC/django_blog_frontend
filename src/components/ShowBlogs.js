@@ -12,56 +12,65 @@ import ReactPaginate from "react-paginate";
 const ShowBlogs = () => {
 
   const url = 'http://localhost:8000/api'
-  const[data, setData] = useState([])
+  // const[data, setData] = useState([])
   const[searchText, setsearchText] = useState("")
 
   const [items, setItems] = useState([])
 
-  useEffect(()=>{
-    fetchData()
-  }, [searchText])
 
-  const fetchData = async()=> {
-    const endpoint = `${url}/search/?search=${searchText}`
-    try {
-      const response = await fetch(endpoint,{
-        method: 'GET'
-      })
-      const data = await response.json()
-      setData(data)
-    }
-    catch(e){
-      console.log(e)
-    }
-  }
+
+  // const fetchData = async()=> {
+  //   const endpoint = 'http://localhost:8000/api/blog-list/'
+  //   try {
+  //     const response = await fetch(endpoint,{
+  //       method: 'GET'
+  //     })
+  //     const data = await response.json()
+  //     setData(data)
+  //   }
+  //   catch(e){
+  //     console.log(e)
+  //   }
+  // }
+
+
+  // useEffect(()=>{
+  //   fetchData()
+  // }, [])
 
   const handlePageClick=(data)=>{
     console.log(data.selected)
   }
 
-  // useEffect(()=>{
-  //   const getComments = async() => {
-  //     const res = await fetch(`http://localhost:8000/api/blog-list/?page=2`)
-  //     const data = await res.json()
-  //     setItems(data)
-  //   }
-  //   getComments()
-  // },[])
+  useEffect(()=>{
+    getComments()
+  },[])
+
   
+  const getComments = async() => {
+    const res = await fetch(`http://localhost:8000/api/blog-list/?page=1`)
+    const data1 = await res.json()
+    setItems(data1)
+  }
+
+ 
+  
+  console.log(items)
   return (
     <div>
-      <NavbarMenu searchText={searchText} setsearchText={setsearchText}/>
-
+      {/* <NavbarMenu searchText={searchText} setsearchText={setsearchText}/> */}
+      
       <Container>
         <h2>All Blogs</h2>
         <Row>
           {
-            data.map((blog,index)=>(
+            items.map((blog,index)=>(
               <Card style={{ width: '18rem' }} className=" ms-2 my-2">
                 <Col>
                   <Card.Img variant="top" src={`http://localhost:8000${blog.image}/`} />
                   <Card.Body>
                     <Card.Title>{blog.name}</Card.Title>
+
                     <Card.Text>{blog.description}</Card.Text>
                   </Card.Body>
                   <Link className='btn btn-dark' to={`/${blog.id}/`}>Show Blog</Link>
