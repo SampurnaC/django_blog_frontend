@@ -3,67 +3,52 @@ import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { Form } from "react-bootstrap";
-import NavbarMenu from './NavbarMenu';
 import ReactPaginate from "react-paginate";
 
 const ShowBlogs = () => {
 
   const url = 'http://localhost:8000/api'
-  // const[data, setData] = useState([])
-  const[searchText, setsearchText] = useState("")
-
   const [items, setItems] = useState([])
 
 
-
-  // const fetchData = async()=> {
-  //   const endpoint = 'http://localhost:8000/api/blog-list/'
-  //   try {
-  //     const response = await fetch(endpoint,{
-  //       method: 'GET'
-  //     })
-  //     const data = await response.json()
-  //     setData(data)
-  //   }
-  //   catch(e){
-  //     console.log(e)
-  //   }
-  // }
-
-
-  // useEffect(()=>{
-  //   fetchData()
-  // }, [])
-
-  const handlePageClick=(data)=>{
-    console.log(data.selected)
-  }
-
   useEffect(()=>{
-    getComments()
+    const getBlogs = async()=>{
+      const res = await fetch(`http://localhost:8000/api/blog-list/?page=1`)
+      const data=await res.json()
+      setItems(data.results)
+    }
+    getBlogs()
   },[])
 
-  
-  const getComments = async() => {
-    const res = await fetch(`http://localhost:8000/api/blog-list/?page=1`)
-    const data1 = await res.json()
-    setItems(data1)
+
+  const handlePageClick = async (data1)=>{
+    let currentPage = data1.selected + 1
+    const getPaginatedBlogs = await getBlogs(currentPage)
+    setItems(getPaginatedBlogs.results)
   }
 
- 
   
-  console.log(items)
+  
+  const getBlogs = async (currentPage) => {
+    const res = await fetch(`http://localhost:8000/api/blog-list/?page=${currentPage}`)
+    const data = await res.json()
+    return data 
+    
+  }
+
+
+
+
   return (
     <div>
       {/* <NavbarMenu searchText={searchText} setsearchText={setsearchText}/> */}
-      
+      {items&&
       <Container>
         <h2>All Blogs</h2>
         <Row>
           {
+            
             items.map((blog,index)=>(
               <Card style={{ width: '18rem' }} className=" ms-2 my-2">
                 <Col>
@@ -80,7 +65,7 @@ const ShowBlogs = () => {
           }
         </Row>
       </Container>
-
+}
       <ReactPaginate
           previousLabel={'previous'}
           nextLabel={'next'}
