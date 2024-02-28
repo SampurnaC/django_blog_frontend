@@ -46,11 +46,11 @@ const ShowBlogs = () => {
       {items&&
       <Container>
         <h2>All Blogs</h2>
-        <Row>
+        <Row className="d-flex justify-content-center">
           {
             
             items.map((blog,index)=>(
-              <Card style={{ width: '18rem' }} className=" ms-2 my-2">
+              <Card style={{ width: '18rem' }} className=" ms-2 my-2 ">
                 <Col>
                   <Card.Img variant="top" src={`http://localhost:8000${blog.image}/`} />
                   <Card.Body>
