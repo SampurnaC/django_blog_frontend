@@ -16,6 +16,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
+import CategoryBlogs from './components/CategoryBlogs';
 
 function App() {
 
@@ -74,6 +75,8 @@ function App() {
           <Route exact path="/addBlog" element={<AddBlog />} />
           <Route exact path="/:id" element={<ListBlog />} />
           <Route exact path="/:id/update" element={<UpdateBlog />} />
+          <Route exact path="/category/:id" element={<CategoryBlogs />} />
+
 
 
         </Routes>
