@@ -5,6 +5,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import ReactPaginate from "react-paginate";
+import styles from "./ShowBlogs.module.css";
+import Category from './Category';
 
 const ShowBlogs = () => {
 
@@ -38,13 +40,11 @@ const ShowBlogs = () => {
   }
 
 
-
-
   return (
     <div>
-      {/* <NavbarMenu searchText={searchText} setsearchText={setsearchText}/> */}
       {items&&
       <Container>
+        <Category />
         <h2>All Blogs</h2>
         <Row className="d-flex justify-content-center">
           {
@@ -52,11 +52,19 @@ const ShowBlogs = () => {
             items.map((blog,index)=>(
               <Card style={{ width: '18rem' }} className=" ms-2 my-2 ">
                 <Col>
-                  <Card.Img variant="top" src={`http://localhost:8000${blog.image}/`} />
+                  {blog.image == null ? <Card.Img variant="top" src={'http://localhost:8000/media/uploads/images/default.png/'} alt=""/>
+                  
+                :
+                
+                <Card.Img variant="top" src={`http://localhost:8000${blog.image}/`} alt=""/>
+                }  
+                  {/* <Card.Img variant="top" src={`http://localhost:8000${blog.image}/`} alt=""/> */}
                   <Card.Body>
                     <Card.Title>{blog.name}</Card.Title>
 
                     <Card.Text>{blog.description}</Card.Text>
+                    <Card.Text>{blog.category}</Card.Text>
+                    
                   </Card.Body>
                   <Link className='btn btn-dark' to={`/${blog.id}/`}>Show Blog</Link>
                 </Col>
@@ -64,25 +72,29 @@ const ShowBlogs = () => {
             ))
           }
         </Row>
+
       </Container>
 }
-      <ReactPaginate
-          previousLabel={'previous'}
-          nextLabel={'next'}
-          breakLabel={'...'}
-          pageCount={12}
-          marginPagesDisplayed={2}
-          onPageChange={handlePageClick}
-          containerClassName={'pagination justify-content-center'}
-          pageClassName={'page-item'}
-          pageLinkClassName={'page-link'}
-          previousLinkClassName={'page-link'}
-          nextLinkClassName={'page-link'}
-          breakClassName={'page-item'}
-          breakLinkClassName={'page-link'}
-          activeClassName={'active'}
-        />
 
+
+      <div className={styles.pagination}>
+        <ReactPaginate style={{ position: "fixed", bottom: "0", width: "100", color: "red" }} 
+            previousLabel={'previous'}
+            nextLabel={'next'}
+            breakLabel={'...'}
+            pageCount={12}
+            marginPagesDisplayed={2}
+            onPageChange={handlePageClick}
+            containerClassName={'pagination justify-content-center'}
+            pageClassName={'page-item'}
+            pageLinkClassName={'page-link'}
+            previousLinkClassName={'page-link'}
+            nextLinkClassName={'page-link'}
+            breakClassName={'page-item'}
+            breakLinkClassName={'page-link'}
+            activeClassName={'active'}
+          />
+      </div>
     </div>
   );
 }
