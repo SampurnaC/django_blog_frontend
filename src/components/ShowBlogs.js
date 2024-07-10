@@ -7,6 +7,7 @@ import Card from 'react-bootstrap/Card';
 import ReactPaginate from "react-paginate";
 import styles from "./ShowBlogs.module.css";
 import Category from './Category';
+import Badge from 'react-bootstrap/Badge';
 
 const ShowBlogs = () => {
 
@@ -30,7 +31,7 @@ const ShowBlogs = () => {
     setItems(getPaginatedBlogs.results)
   }
 
-  
+  console.log(items)
   
   const getBlogs = async (currentPage) => {
     const res = await fetch(`http://localhost:8000/api/blog-list/?page=${currentPage}`)
@@ -38,8 +39,7 @@ const ShowBlogs = () => {
     return data 
     
   }
-
-
+console.log(items)
   return (
     <div>
       {items&&
@@ -52,21 +52,21 @@ const ShowBlogs = () => {
             items.map((blog,index)=>(
               <Card style={{ width: '18rem' }} className=" ms-2 my-2 ">
                 <Col>
-                  {blog.image == null ? <Card.Img variant="top" src={'http://localhost:8000/media/uploads/images/default.png/'} alt=""/>
+                  {blog.image == null ? <Card.Img variant="top" src={blog.image_url} alt="" style={{height: "220px"}}/>
                   
                 :
                 
-                <Card.Img variant="top" src={`http://localhost:8000${blog.image}/`} alt=""/>
+                <Card.Img variant="top" src={blog.image} alt="" style={{height: "200px"}} />
                 }  
-                  {/* <Card.Img variant="top" src={`http://localhost:8000${blog.image}/`} alt=""/> */}
+                  {/* <Card.Img variant="top" src={`http://localhost:8000${blog.image}/`} alt=""/>    */}
                   <Card.Body>
                     <Card.Title>{blog.name}</Card.Title>
 
                     <Card.Text>{blog.description}</Card.Text>
                     <Card.Text>{blog.category}</Card.Text>
-                    
+                    <Badge bg="warning" text="dark">{blog.artist}</Badge>
                   </Card.Body>
-                  <Link className='btn btn-dark' to={`/${blog.id}/`}>Show Blog</Link>
+                  <Link className='btn btn-dark' to={`${blog.id}`}>Show Blog</Link>
                 </Col>
               </Card>
             ))
@@ -83,7 +83,7 @@ const ShowBlogs = () => {
             nextLabel={'next'}
             breakLabel={'...'}
             pageCount={12}
-            marginPagesDisplayed={2}
+            marginPagesDisplayed={3}
             onPageChange={handlePageClick}
             containerClassName={'pagination justify-content-center'}
             pageClassName={'page-item'}

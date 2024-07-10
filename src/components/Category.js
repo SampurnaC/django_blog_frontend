@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Form, Nav, Navbar } from "react-bootstrap";
 import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+
 
 const Category = () => {
     const [categories, setCategories] = useState([]);
@@ -18,36 +19,23 @@ const Category = () => {
 
     },[])
 
-    console.log(categories)
     return (
-      // <div>
-      //   {categories.map((cat,index)=>(
-      //     <option value={cat.id}>{cat.name}</option>
-      //     ))
-      //     }
-      // </div>
-
-      <Navbar >
-      <Container>
-        <Nav className="me-auto">
-          {categories.map((cat,index)=>(
-            // <Nav.Link as={Link} to='/category/${cat.name}'>{cat.name}</Nav.Link>
-            <Nav.Link as={Link} to={encodeURI(`/category/${cat.id}`)}>
-            {cat.name}
-          </Nav.Link>
-          ))
-        }
-        </Nav>
-      </Container>
-    </Navbar>
+      <Navbar>
+        <Container>
+          <Row className="d-flex justify-content-center">
+            <Nav className="me-auto">
+              {categories.map((cat,index)=>(
+                // <Nav.Link as={Link} to='/category/${cat.name}'>{cat.name}</Nav.Link>
+                <Nav.Link as={Link} to={encodeURI(`/category/${cat.id}`)} className="btn btn-dark me-1" style={{color: "white", backgroundColor: "black"}}>
+                {cat.name}
+              </Nav.Link>
+              ))
+            }
+            </Nav>
+          </Row>
+        </Container>
+      </Navbar>
     );
 }
  
 export default Category;
-{/* <ul>
-          {categories.map((cat,index)=>(
-            <li key={cat.id}><a href={"category"+'/'+cat.name}>{cat.name}</a>
-            </li>
-          ))
-}
-          </ul> */}

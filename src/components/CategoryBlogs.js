@@ -20,8 +20,6 @@ const CategoryBlogs = () => {
       getCategories()
 
     },[])
-    console.log(id)
-    console.log(blogs)
     return (
         <Container>
         <h2>Blogs for Category {id}</h2>

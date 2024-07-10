@@ -34,7 +34,9 @@ const ListBlog = () => {
           <Row>
             <Col></Col>
             <Col>
-            <img src={`http://localhost:8000${blog.image}/`} alt="" className="img-fluid"/>
+            {/* <img src={`http://localhost:8000${blog.image}/`} alt="" className="img-fluid"/> */}
+            <img src={blog.image} alt="" className="img-fluid"/>
+
             <p>{blog.name}</p>
             <p>{blog.description}</p>
             <Link className="btn btn-outline-primary mr-2 mx-2" to={`/${blog.id}/update`}>Update</Link>

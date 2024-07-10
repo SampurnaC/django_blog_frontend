@@ -37,7 +37,6 @@ const UpdateBlog = () => {
             url: `http://localhost:8000/api/blog-update/${id}/`,
             data: formField,
         }).then(response => {
-            console.log(response.data);
             navigate("/");
         })
     }
